@@ -1,0 +1,7 @@
+../Core/Src/fsm_machine.c:20:6:TRAFFIC_NORMAL1	8	static
+../Core/Src/fsm_machine.c:80:6:TRAFFIC_NORMAL2	8	static
+../Core/Src/fsm_machine.c:138:6:OFF_ALL_LED2	8	static
+../Core/Src/fsm_machine.c:144:6:OFF_ALL_LED1	8	static
+../Core/Src/fsm_machine.c:151:6:ON_ALL_LED2	8	static
+../Core/Src/fsm_machine.c:157:6:ON_ALL_LED1	8	static
+../Core/Src/fsm_machine.c:221:6:fsm_Suy_Exercise	8	static
