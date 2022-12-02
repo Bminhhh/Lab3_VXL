@@ -13,6 +13,7 @@
 #include "button3.h"
 #include "software_timer.h"
 #include "seg7_display.h"
+#include "fsm_machine.h"
 
 
 void blink_RED(){
@@ -40,67 +41,52 @@ void blink_GREEN(){
 	return;
 }
 
-void fsm_Changed_SEG(){
-	switch(mode){
-	case 11:
-		blink_RED();
-		to_do_7SEG();
-		break;
-	case 12:
-		blink_YELLOW();
-		break;
-	case 13:
-		blink_GREEN();
-		break;
-	default:
-		break;
-	}
-}
+
 void updateClockBuffer(void){
-	seg_buffer2[0]=num1/10;
-	seg_buffer2[1]=num1%10;
-	seg_buffer2[2]=num2;
-	seg_buffer2[3]=num2;
+	seg_index1 = time_for_Traffic1/10;
+	seg_index3 = time_for_Traffic2/10;
+	seg_index2 = time_for_Traffic1%10;
+	seg_index4 = time_for_Traffic2%10;
 	return;
 }
 
 
-//CHanged modes seg
-void SEG7_CHANGED_MODE(int seg){
-	switch(seg2){
-	case 0:
-		turnLEDOFF();
-		display7SEG1(seg_index1);
-		HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 0);
-//		clockRun();
-		break;
-	case 1:
-		turnLEDOFF();
-		display7SEG1(seg_index2);
-		HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 0);
-		seg_index2--;
-		if(seg_index2 == 0){
-			seg_index2 = seg_buffer1[(++num1)%3];
-		}
-		break;
-	case 2:
-		turnLEDOFF();
-		display7SEG1(seg_index3);
-		HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, 0);
-		break;
-	case 3:
-		turnLEDOFF();
-		display7SEG1(seg_index4);
-		HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, 0);
-		seg_index4--;
-		if(seg_index4 == 0){
-			seg_index4 = seg_buffer1[(++num2)%3];
-		}
-		break;
-	default:
-		break;
-	}
-	return;
-}
+////CHanged modes seg
+//void SEG7_CHANGED_MODE(int seg2){
+//	switch(seg2){
+//	case 0:
+//		turnLEDOFF();
+//		display7SEG1(seg_index1);
+//		HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 0);
+////		clockRun();
+//		break;
+//	case 1:
+//		turnLEDOFF();
+//		display7SEG1(seg_index2);
+//		HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 0);
+//		seg_index2--;
+//		if(seg_index2 == 0){
+//			seg_index2 = seg_buffer1[(++num1)%3];
+//		}
+//		break;
+//	case 2:
+//		turnLEDOFF();
+//		display7SEG1(seg_index3);
+//		HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, 0);
+//		break;
+//	case 3:
+//		turnLEDOFF();
+//		display7SEG1(seg_index4);
+//		HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, 0);
+//		seg_index4--;
+//		if(seg_index4 == 0){
+//			seg_index4 = seg_buffer1[(++num2)%3];
+//		}
+//		break;
+//	default:
+//		break;
+//	}
+//	return;
+//}
 
 

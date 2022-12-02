@@ -10,9 +10,10 @@
 
 #include "main.h"
 #include "software_timer.h"
+#include "seg7_display.h"
 
 void fsm_Changed_SEG();
-
+void updateClockBuffer(void);
 //CHANGED MODE OF BLINK LED
 void blink_RED();
 void blink_GREEN();

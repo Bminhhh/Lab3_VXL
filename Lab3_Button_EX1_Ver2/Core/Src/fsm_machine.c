@@ -11,123 +11,115 @@
 #include "software_timer.h"
 #include "seg7_display.h"
 #include "global.h"
+#include "button.h"
+#include "button2.h"
+#include "button3.h"
+#include "fsm_change.h"
 
 int status_traffic1 = 1;
 int status_traffic2 = 1;
+int time_for_Traffic1;
+int time_for_Traffic2;
 //int seg_index1 = 5;
 //int seg_index2 = 3;
 //int seg = 0;
-void TRAFFIC_NORMAL1(){
-//	while(status_BUTTONS == 0){
-	switch(status_traffic1){
 
+
+void TRAFFIC_NORMAL1(){
+	switch(status_traffic1){
 	case 1:
+		updateClockBuffer();
 		HAL_GPIO_WritePin(RED1_GPIO_Port, RED1_Pin, RESET);
 		HAL_GPIO_WritePin(GREEN1_GPIO_Port, GREEN1_Pin, SET);
 		HAL_GPIO_WritePin(PURPLE1_GPIO_Port, PURPLE1_Pin, SET);
-
-//		HAL_GPIO_WritePin(RED2_GPIO_Port, RED2_Pin, SET);
-//		HAL_GPIO_WritePin(GREEN2_GPIO_Port, GREEN2_Pin, RESET);
-//		HAL_GPIO_WritePin(PURPLE2_GPIO_Port, PURPLE2_Pin, SET);
 		if(timer_flag1 == 1){
-			status_traffic1 = 2;
-			setTimer1(300);      //green
+			setTimer1(100);      //red
+			time_for_Traffic1--;
+			if(time_for_Traffic1 == 0){
+				status_traffic1 = 2;
+				time_for_Traffic1 = seg_buffer1[1];
+			}
 		}
 		break;
 	case 2:
+		updateClockBuffer();
 		HAL_GPIO_WritePin(RED1_GPIO_Port, RED1_Pin, SET);
 		HAL_GPIO_WritePin(GREEN1_GPIO_Port, GREEN1_Pin, RESET);
 		HAL_GPIO_WritePin(PURPLE1_GPIO_Port, PURPLE1_Pin, SET);
-//		HAL_GPIO_WritePin(RED2_GPIO_Port, RED2_Pin, SET);
-//		HAL_GPIO_WritePin(GREEN2_GPIO_Port, GREEN2_Pin, SET);
-//		HAL_GPIO_WritePin(PURPLE2_GPIO_Port, PURPLE2_Pin, RESET);
 		if(timer_flag1 == 1){
-			status_traffic1 = 3;
-			setTimer1(200);     //purple1
+			setTimer1(100);      //green
+			time_for_Traffic1--;
+			if(time_for_Traffic1 == 0){
+				status_traffic1 = 3;
+				time_for_Traffic1 = seg_buffer1[2];
+			}
 		}
 		break;
 
 	case 3:
+		updateClockBuffer();
 		HAL_GPIO_WritePin(RED1_GPIO_Port, RED1_Pin, SET);
 		HAL_GPIO_WritePin(GREEN1_GPIO_Port, GREEN1_Pin, SET);
 		HAL_GPIO_WritePin(PURPLE1_GPIO_Port, PURPLE1_Pin, RESET);
-//		HAL_GPIO_WritePin(RED2_GPIO_Port, RED2_Pin, RESET);
-//		HAL_GPIO_WritePin(GREEN2_GPIO_Port, GREEN2_Pin, SET);
-//		HAL_GPIO_WritePin(PURPLE2_GPIO_Port, PURPLE2_Pin, SET);
 		if(timer_flag1 == 1){
-			setTimer1(500);
-			status_traffic1 = 1;
+			setTimer1(100);      //YELLOW
+				time_for_Traffic1--;
+				if(time_for_Traffic1 == 0){
+					status_traffic1 = 1;
+					time_for_Traffic1 = seg_buffer1[0];
+				}
 		}
 		break;
-//	case 4:
-//		HAL_GPIO_WritePin(RED1_GPIO_Port, RED1_Pin, SET);
-//		HAL_GPIO_WritePin(GREEN1_GPIO_Port, GREEN1_Pin, SET);
-//		HAL_GPIO_WritePin(PURPLE1_GPIO_Port, PURPLE1_Pin, RESET);
-//		HAL_GPIO_WritePin(RED2_GPIO_Port, RED2_Pin, RESET);
-//		HAL_GPIO_WritePin(GREEN2_GPIO_Port, GREEN2_Pin, SET);
-//		HAL_GPIO_WritePin(PURPLE2_GPIO_Port, PURPLE2_Pin, SET);
-//		if(timer_flag1 == 1){
-//			setTimer1(300);
-//			status_traffic = 1;
-//				}
-//		break;
 	default:
 		break;
 	}
-//	}
 }
+
+
 
 void TRAFFIC_NORMAL2(){
 	switch(status_traffic2){
-
 	case 1:
-//		HAL_GPIO_WritePin(RED1_GPIO_Port, RED1_Pin, RESET);
-//		HAL_GPIO_WritePin(GREEN1_GPIO_Port, GREEN1_Pin, SET);
-//		HAL_GPIO_WritePin(PURPLE1_GPIO_Port, PURPLE1_Pin, SET);
+		updateClockBuffer();
 		HAL_GPIO_WritePin(RED2_GPIO_Port, RED2_Pin, SET);
 		HAL_GPIO_WritePin(GREEN2_GPIO_Port, GREEN2_Pin, RESET);
 		HAL_GPIO_WritePin(PURPLE2_GPIO_Port, PURPLE2_Pin, SET);
 		if(timer_flag2 == 1){
-			status_traffic2 = 2;
-			setTimer2(200);//yellow
+			setTimer2(100);      //green
+			time_for_Traffic2--;
+			if(time_for_Traffic2 == 0){
+					status_traffic2 = 2;
+					time_for_Traffic2 = seg_buffer1[2];
+				}
 		}
 		break;
 	case 2:
-//		HAL_GPIO_WritePin(RED1_GPIO_Port, RED1_Pin, RESET);
-//		HAL_GPIO_WritePin(GREEN1_GPIO_Port, GREEN1_Pin, SET);
-//		HAL_GPIO_WritePin(PURPLE1_GPIO_Port, PURPLE1_Pin, SET);
+		updateClockBuffer();
 		HAL_GPIO_WritePin(RED2_GPIO_Port, RED2_Pin, SET);
 		HAL_GPIO_WritePin(GREEN2_GPIO_Port, GREEN2_Pin, SET);
 		HAL_GPIO_WritePin(PURPLE2_GPIO_Port, PURPLE2_Pin, RESET);
 		if(timer_flag2 == 1){
-			status_traffic2 = 3;
-			setTimer2(500);//red1
+			setTimer2(100);
+			time_for_Traffic2--;
+			if(time_for_Traffic2 == 0){
+				time_for_Traffic2 = seg_buffer1[0];
+				status_traffic2 = 3;
+			}
 		}
 		break;
-
 	case 3:
-//		HAL_GPIO_WritePin(RED1_GPIO_Port, RED1_Pin, SET);
-//		HAL_GPIO_WritePin(GREEN1_GPIO_Port, GREEN1_Pin, RESET);
-//		HAL_GPIO_WritePin(PURPLE1_GPIO_Port, PURPLE1_Pin, SET);
+		updateClockBuffer();
 		HAL_GPIO_WritePin(RED2_GPIO_Port, RED2_Pin, RESET);
 		HAL_GPIO_WritePin(GREEN2_GPIO_Port, GREEN2_Pin, SET);
 		HAL_GPIO_WritePin(PURPLE2_GPIO_Port, PURPLE2_Pin, SET);
 		if(timer_flag2 == 1){
-			setTimer2(300);
-			status_traffic2 = 1;
+			setTimer2(100);
+			time_for_Traffic2--;
+			if(time_for_Traffic2 == 0){
+				time_for_Traffic2 = seg_buffer1[1];
+				status_traffic2 = 1;
+			}
 		}
-		break;
-//	case 4:
-//		HAL_GPIO_WritePin(RED1_GPIO_Port, RED1_Pin, SET);
-//		HAL_GPIO_WritePin(GREEN1_GPIO_Port, GREEN1_Pin, SET);
-//		HAL_GPIO_WritePin(PURPLE1_GPIO_Port, PURPLE1_Pin, RESET);
-//		HAL_GPIO_WritePin(RED2_GPIO_Port, RED2_Pin, RESET);
-//		HAL_GPIO_WritePin(GREEN2_GPIO_Port, GREEN2_Pin, SET);
-//		HAL_GPIO_WritePin(PURPLE2_GPIO_Port, PURPLE2_Pin, SET);
-//		if(timer_flag1 == 1){
-//			setTimer1(300);
-//			status_traffic = 1;
-//				}
 		break;
 	default:
 		break;
@@ -160,100 +152,91 @@ void ON_ALL_LED1(){
 	HAL_GPIO_WritePin(PURPLE1_GPIO_Port, PURPLE1_Pin, 0);
 }
 
-//void SEG_MODE1_DISPLAY(int num){
-//	switch(num){
-//	case 1:
-//
-//		break;
-//	case 2:
-//
-//		break;
-//	case 3:
-//		display7SEG1(0);
-//		break;
-//	case 4:
-//		display7SEG1(2);
-//		break;
-//	default:
-//		break;
-//	}
-//}
-//
 
 
+void start_SEG7(){
+	 time_for_Traffic1 = seg_buffer1[0];
+	 time_for_Traffic2 = seg_buffer1[1];
+}
 
-//void fsm_status(){
-//	switch(status_BUTTONS){
-//	case 0:
-//		TRAFFIC_NORMAL1();
-//		TRAFFIC_NORMAL2();
-//		to_do_7SEG();
-////		if(is_SELECT_Pressed() == 1){
-////			status_BUTTONS = 1;
-////			OFF_ALL_LED1();
-////			OFF_ALL_LED2();
-////			setTimer_for_blink(250);
-////		}
-////		if(is_MODIFY_Pressed() == 1){
-////			status_BUTTONS = 1;
-////		}
-//		break;
-//	case 1:
-////		if(flag_BLINK == 1){
-////			setTimer_for_blink(250);
-////			HAL_GPIO_TogglePin(RED2_GPIO_Port, RED2_Pin);
-////			HAL_GPIO_TogglePin(RED1_GPIO_Port, RED1_Pin);
-////		}
-//
-//		break;
-//	case 2:
-//
-//		break;
-//	case 3:
-//
-//		break;
-//	default:
-//		break;
-//	}
-//}
 
+//FSM_MACHINE_SYSTEM
 
 void fsm_Suy_Exercise(){
 	switch(status_BUTTONS){
 	case 0:
+
 		TRAFFIC_NORMAL1();
 		TRAFFIC_NORMAL2();
-		to_do_7SEG();
-//		if(is_SELECT_PRESSED() == 1){
-//			status_BUTTONS = 1;
-//		}
-		if(is_MODIFY_PRESSED() == 1){
+		if(is_SELECT_PRESSED() == 1){
 			status_BUTTONS = 1;
+			seg_index4 = 2;
+			seg_index3 = 0;
+			OFF_ALL_LED1();
+			OFF_ALL_LED2();
 		}
 		break;
 	case 1:
-		ON_ALL_LED1();
-		ON_ALL_LED2();
-//		if(is_SELECT_PRESSED() == 1){
-//					status_BUTTONS = 2;
-//				}
-//		if(is_SELECT_PRESSED() == 1){
-//			OFF_ALL_LED1();
-//			OFF_ALL_LED2();
-//		}
+		blink_RED();
+		seg_index1 = seg_buffer1[0]/10;
+		seg_index2 = seg_buffer1[0]%10;
+		if(is_SELECT_PRESSED() == 1){
+			status_BUTTONS = 2;
+			seg_index4 ++;
+			OFF_ALL_LED1();
+			OFF_ALL_LED2();
+		}
+		if(is_SET_PRESSED() == 1){
+			status_BUTTONS = 0;
+		}
 		if(is_MODIFY_PRESSED() == 1){
-				status_BUTTONS = 2;
+			if(seg_buffer1[0]<99){
+				seg_buffer1[0]=seg_buffer1[0]+1;//1-99
+				} else {
+					seg_buffer1[0]=1;
 			}
+		}
+//		if(is_MODIFY_PRESSED() == 1){
+//
+//			}
 		break;
 	case 2:
-		HAL_GPIO_TogglePin(GREEN1_GPIO_Port, GREEN1_Pin);
-		if(is_SELECT_PRESSED() == 1){
-					status_BUTTONS = 3;
+		seg_index1 = seg_buffer1[2]/10;
+		seg_index2 = seg_buffer1[2]%10;
+		blink_YELLOW();
+		if((is_SELECT_PRESSED() == 1)){
+			status_BUTTONS = 3;
+			seg_index4++;
+			OFF_ALL_LED1();
+			OFF_ALL_LED2();
+		}
+		if(is_MODIFY_PRESSED() == 1){
+			if(seg_buffer1[2]<99){
+				seg_buffer1[2]=seg_buffer1[2]+1;//1-99
+				} else {
+					seg_buffer1[2]=1;
 				}
+		}
+		if(is_SET_PRESSED() == 1){
+			status_BUTTONS = 0;
+		}
 		break;
 	case 3:
+		seg_index1 = seg_buffer1[1]/10;
+		seg_index2 = seg_buffer1[1]%10;
+		blink_GREEN();
 		if(is_SELECT_PRESSED() == 1){
-					status_BUTTONS = 4;
+					status_BUTTONS = 1;
+				}
+		if(is_MODIFY_PRESSED() == 1){
+			if(seg_buffer1[1]<99){
+				seg_buffer1[1]=seg_buffer1[1]+1;//1-99
+				} else {
+					seg_buffer1[1]=1;
+				}
+		}
+		if(is_SET_PRESSED() == 1){
+					status_BUTTONS = 0;
 				}
 		break;
 	default:
@@ -261,3 +244,4 @@ void fsm_Suy_Exercise(){
 	}
 	return;
 }
+

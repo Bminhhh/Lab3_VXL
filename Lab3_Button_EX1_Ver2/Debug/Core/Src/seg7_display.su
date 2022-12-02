@@ -10,6 +10,5 @@
 ../Core/Src/seg7_display.c:139:6:nine	8	static
 ../Core/Src/seg7_display.c:153:6:display7SEG1	16	static
 ../Core/Src/seg7_display.c:194:6:turnLEDOFF	8	static
-../Core/Src/seg7_display.c:202:6:start7SEG	4	static
-../Core/Src/seg7_display.c:211:6:SEG7_NORMAL_MODE	16	static
-../Core/Src/seg7_display.c:287:6:to_do_7SEG	8	static
+../Core/Src/seg7_display.c:206:6:SEG7_NORMAL_MODE	16	static
+../Core/Src/seg7_display.c:274:6:to_do_7SEG	8	static

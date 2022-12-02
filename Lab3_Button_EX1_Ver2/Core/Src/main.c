@@ -17,8 +17,6 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-
-
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -31,6 +29,7 @@
 #include "button2.h"
 #include "button3.h"
 #include "fsm_change.h"
+#include "schedule_function.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -49,6 +48,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 TIM_HandleTypeDef htim2;
+TIM_HandleTypeDef htim3;
 
 /* USER CODE BEGIN PV */
 
@@ -58,12 +58,27 @@ TIM_HandleTypeDef htim2;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM2_Init(void);
+static void MX_TIM3_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+							//Todo 1
+//void Toggle1(){
+//	HAL_GPIO_TogglePin(RED1_GPIO_Port, RED1_Pin);
+//}
+//
+//							//tODO 2
+//void Toggle2(){
+//	HAL_GPIO_TogglePin(RED2_GPIO_Port, RED2_Pin);
+//}
+//
+//void Toggle3(){
+//	HAL_GPIO_TogglePin(GREEN1_GPIO_Port, GREEN1_Pin);
+//}
+//void (*ptr)() = Toggle;
 
 /* USER CODE END 0 */
 
@@ -72,16 +87,8 @@ static void MX_TIM2_Init(void);
   * @retval int
   */
 int main(void)
-{	setTimer_for_GREEN_blink(25);
-	setTimer_for_RED_blink(25);
-	setTimer_for_YELLOW_blink(25);
-	setTimer2(300);				//INIT of green
-	setTimer1(500);				//INIt of red
-	setTimer3(25);
-//	setTimer_7seg_NORMAL1(500);
-//	setTimer_7seg_NORMAL4(300);
+{
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -90,7 +97,14 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  // Initialize a schedule
+//  		 SCH_Init() ;
+  	//Add a task to repeatedly call in every 1 second .
+//  		 OFF_ALL_LED1();
+//  		 OFF_ALL_LED2();
+//  		 SCH_Add_Task(Toggle1, 100 , 100) ;
+//  		 SCH_Add_Task(Toggle2, 300 , 100) ;
+//  		 SCH_Add_Task(Toggle3, 200, 100);
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -103,43 +117,42 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_TIM2_Init();
+  MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
 HAL_TIM_Base_Start_IT(&htim2);
+//HAL_TIM_Base_Start_IT(&htim3);
 
-
-start7SEG();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-//int seg = 0;
-
+start_SEG7();
+setTimer1(100);
+setTimer2(100);
+setTimer3(25);
+//void Toggle(){
+//	HAL_GPIO_TogglePin(RED1_GPIO_Port, RED1_Pin);
+//}
+//
+//void (*ptr)();
+//ptr = Toggle;
+//OFF_ALL_LED1();
+//OFF_ALL_LED2();
   while (1)
   {
-
-
-
-//
-//	  if(is_SELECT_PRESSED() == 1){
-//		  HAL_GPIO_WritePin(RED1_GPIO_Port, RED1_Pin, 1);
-//	  }
-//	  get_key_Input();
-//	  fsm_status();
-//	  fsm_Suy_Exercise();
-	  to_do_7SEG();
-//	  OFF_ALL_LED1();
-//	  OFF_ALL_LED2();
-//	  blink_GREEN();
-//	  blink_RED();
-//	  blink_YELLOW();
-
 //	  HAL_GPIO_TogglePin(RED1_GPIO_Port, RED1_Pin);
+//	  HAL_Delay(100);
+////	  SCH_Dispatch_Tasks();
+//	  (*ptr)();
+//	  Toggle();
+//	  HAL_Delay(1000);
 
 
+	  to_do_7SEG();
+	  fsm_Suy_Exercise();
 
-//	  turnLEDOFF();
-//	  display7SEG1(5);
-//	  HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 0);
+//Dispatcher function INIT
+//	  SCH_Dispatch_Tasks();
 
     /* USER CODE END WHILE */
 
@@ -230,6 +243,51 @@ static void MX_TIM2_Init(void)
 }
 
 /**
+  * @brief TIM3 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM3_Init(void)
+{
+
+  /* USER CODE BEGIN TIM3_Init 0 */
+
+  /* USER CODE END TIM3_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM3_Init 1 */
+
+  /* USER CODE END TIM3_Init 1 */
+  htim3.Instance = TIM3;
+  htim3.Init.Prescaler = 7999;
+  htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim3.Init.Period = 499;
+  htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim3, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM3_Init 2 */
+
+  /* USER CODE END TIM3_Init 2 */
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -287,6 +345,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim2){
 	get_key_Input();
 	get_key_Input2();
 	get_key_Input3();
+//	SCH_Update();
 }
 /* USER CODE END 4 */
 

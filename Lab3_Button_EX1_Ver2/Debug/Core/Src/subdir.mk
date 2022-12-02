@@ -12,6 +12,7 @@ C_SRCS += \
 ../Core/Src/fsm_machine.c \
 ../Core/Src/global.c \
 ../Core/Src/main.c \
+../Core/Src/schedule_function.c \
 ../Core/Src/seg7_display.c \
 ../Core/Src/software_timer.c \
 ../Core/Src/stm32f1xx_hal_msp.c \
@@ -28,6 +29,7 @@ OBJS += \
 ./Core/Src/fsm_machine.o \
 ./Core/Src/global.o \
 ./Core/Src/main.o \
+./Core/Src/schedule_function.o \
 ./Core/Src/seg7_display.o \
 ./Core/Src/software_timer.o \
 ./Core/Src/stm32f1xx_hal_msp.o \
@@ -44,6 +46,7 @@ C_DEPS += \
 ./Core/Src/fsm_machine.d \
 ./Core/Src/global.d \
 ./Core/Src/main.d \
+./Core/Src/schedule_function.d \
 ./Core/Src/seg7_display.d \
 ./Core/Src/software_timer.d \
 ./Core/Src/stm32f1xx_hal_msp.d \
@@ -60,7 +63,7 @@ Core/Src/%.o Core/Src/%.su: ../Core/Src/%.c Core/Src/subdir.mk
 clean: clean-Core-2f-Src
 
 clean-Core-2f-Src:
-	-$(RM) ./Core/Src/button.d ./Core/Src/button.o ./Core/Src/button.su ./Core/Src/button2.d ./Core/Src/button2.o ./Core/Src/button2.su ./Core/Src/button3.d ./Core/Src/button3.o ./Core/Src/button3.su ./Core/Src/fsm_change.d ./Core/Src/fsm_change.o ./Core/Src/fsm_change.su ./Core/Src/fsm_machine.d ./Core/Src/fsm_machine.o ./Core/Src/fsm_machine.su ./Core/Src/global.d ./Core/Src/global.o ./Core/Src/global.su ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/seg7_display.d ./Core/Src/seg7_display.o ./Core/Src/seg7_display.su ./Core/Src/software_timer.d ./Core/Src/software_timer.o ./Core/Src/software_timer.su ./Core/Src/stm32f1xx_hal_msp.d ./Core/Src/stm32f1xx_hal_msp.o ./Core/Src/stm32f1xx_hal_msp.su ./Core/Src/stm32f1xx_it.d ./Core/Src/stm32f1xx_it.o ./Core/Src/stm32f1xx_it.su ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32f1xx.d ./Core/Src/system_stm32f1xx.o ./Core/Src/system_stm32f1xx.su
+	-$(RM) ./Core/Src/button.d ./Core/Src/button.o ./Core/Src/button.su ./Core/Src/button2.d ./Core/Src/button2.o ./Core/Src/button2.su ./Core/Src/button3.d ./Core/Src/button3.o ./Core/Src/button3.su ./Core/Src/fsm_change.d ./Core/Src/fsm_change.o ./Core/Src/fsm_change.su ./Core/Src/fsm_machine.d ./Core/Src/fsm_machine.o ./Core/Src/fsm_machine.su ./Core/Src/global.d ./Core/Src/global.o ./Core/Src/global.su ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/schedule_function.d ./Core/Src/schedule_function.o ./Core/Src/schedule_function.su ./Core/Src/seg7_display.d ./Core/Src/seg7_display.o ./Core/Src/seg7_display.su ./Core/Src/software_timer.d ./Core/Src/software_timer.o ./Core/Src/software_timer.su ./Core/Src/stm32f1xx_hal_msp.d ./Core/Src/stm32f1xx_hal_msp.o ./Core/Src/stm32f1xx_hal_msp.su ./Core/Src/stm32f1xx_it.d ./Core/Src/stm32f1xx_it.o ./Core/Src/stm32f1xx_it.su ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32f1xx.d ./Core/Src/system_stm32f1xx.o ./Core/Src/system_stm32f1xx.su
 
 .PHONY: clean-Core-2f-Src
 

@@ -1,8 +1,7 @@
-../Core/Src/software_timer.c:44:6:setTimer1	16	static
-../Core/Src/software_timer.c:50:6:setTimer2	16	static
-../Core/Src/software_timer.c:56:6:setTimer3	16	static
-../Core/Src/software_timer.c:112:6:setTimer_for_blink	16	static
-../Core/Src/software_timer.c:124:6:setTimer_for_RED_blink	16	static
-../Core/Src/software_timer.c:133:6:setTimer_for_GREEN_blink	16	static
-../Core/Src/software_timer.c:140:6:setTimer_for_YELLOW_blink	16	static
-../Core/Src/software_timer.c:146:6:timerRun	4	static
+../Core/Src/software_timer.c:29:6:setTimer1	16	static
+../Core/Src/software_timer.c:35:6:setTimer2	16	static
+../Core/Src/software_timer.c:41:6:setTimer3	16	static
+../Core/Src/software_timer.c:50:6:setTimer_for_RED_blink	16	static
+../Core/Src/software_timer.c:57:6:setTimer_for_GREEN_blink	16	static
+../Core/Src/software_timer.c:64:6:setTimer_for_YELLOW_blink	16	static
+../Core/Src/software_timer.c:70:6:timerRun	4	static

@@ -26,7 +26,9 @@ Core/Src/fsm_machine.o: ../Core/Src/fsm_machine.c ../Core/Inc/main.h \
  ../Core/Inc/fsm_machine.h ../Core/Inc/main.h ../Core/Inc/global.h \
  ../Core/Inc/button2.h ../Core/Inc/button.h ../Core/Inc/button3.h \
  ../Core/Inc/software_timer.h ../Core/Inc/software_timer.h \
- ../Core/Inc/seg7_display.h ../Core/Inc/global.h
+ ../Core/Inc/seg7_display.h ../Core/Inc/fsm_change.h \
+ ../Core/Inc/seg7_display.h ../Core/Inc/global.h ../Core/Inc/button.h \
+ ../Core/Inc/button3.h ../Core/Inc/fsm_change.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 ../Core/Inc/stm32f1xx_hal_conf.h:
@@ -61,4 +63,9 @@ Core/Src/fsm_machine.o: ../Core/Src/fsm_machine.c ../Core/Inc/main.h \
 ../Core/Inc/software_timer.h:
 ../Core/Inc/software_timer.h:
 ../Core/Inc/seg7_display.h:
+../Core/Inc/fsm_change.h:
+../Core/Inc/seg7_display.h:
 ../Core/Inc/global.h:
+../Core/Inc/button.h:
+../Core/Inc/button3.h:
+../Core/Inc/fsm_change.h:

@@ -20,10 +20,14 @@ void OFF_ALL_LED1();
 void OFF_ALL_LED2();
 void ON_ALL_LED1();
 void ON_ALL_LED2();
+void start_SEG7();
+
+
 extern int seg ;
 
 extern int status_BUTTONS;
 extern int ex;
-
+extern int time_for_Traffic1;
+extern int time_for_Traffic2;
 
 #endif /* INC_FSM_MACHINE_H_ */

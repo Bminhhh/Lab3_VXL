@@ -11,13 +11,13 @@
 //variables for 7SEG
 
 int seg_buffer1[3]={5,3,2};
-int seg_buffer2[10]={0,1,2,3,4,5,6,7,8,9};
+//int seg_buffer2[10]={0,1,2,3,4,5,6,7,8,9};
 int num1 = 0;
 int num2 = 1;
-int seg_index1 = 0;
-int seg_index2 = 0;
-int seg_index3 = 0;
-int seg_index4 = 0;
+int seg_index1;
+int seg_index2;
+int seg_index3;
+int seg_index4;
 
 int seg = 0;
 
@@ -199,11 +199,6 @@ void turnLEDOFF(void){
 
 }
 
-void start7SEG()
-{
-	seg_index2 = seg_buffer1[num1];
-	seg_index4 = seg_buffer1[num2];
-}
 
 
 //change_7SEG_status in NORMAL_MODE
@@ -220,10 +215,6 @@ void SEG7_NORMAL_MODE(int seg){
 		turnLEDOFF();
 		display7SEG1(seg_index2);
 		HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 0);
-		seg_index2--;
-		if(seg_index2 == 0){
-			seg_index2 = seg_buffer1[(++num1)%3];
-		}
 		break;
 	case 2:
 		turnLEDOFF();
@@ -234,10 +225,6 @@ void SEG7_NORMAL_MODE(int seg){
 		turnLEDOFF();
 		display7SEG1(seg_index4);
 		HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, 0);
-		seg_index4--;
-		if(seg_index4 == 0){
-			seg_index4 = seg_buffer1[(++num2)%3];
-		}
 		break;
 	default:
 		break;

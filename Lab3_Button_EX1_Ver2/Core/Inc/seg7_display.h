@@ -10,6 +10,7 @@
 
 #include "main.h"
 #include "software_timer.h"
+#include "fsm_change.h"
 
 
 extern int seg_index1;
